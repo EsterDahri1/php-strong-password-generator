@@ -12,13 +12,17 @@ Verificato il corretto funzionamento del nostro codice, spostiamo la logica in u
 
 
 <?php
+include __DIR__ . '/functions.php';
 
+//var_dump($_GET);
 
+if (isset($_GET['pass_length'])) {
+    $length = $_GET['pass_length'];
+    $password = generatePassword($length);
+    //var_dump($password);
+}
 
 ?>
-
-
-
 
 
 <!DOCTYPE html>
@@ -30,39 +34,34 @@ Verificato il corretto funzionamento del nostro codice, spostiamo la logica in u
     <title>PHP Strong Password Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
 </head>
 
-<body>
+<body style="background-color: #001632;">
+
+
     <div class="container">
-        <h1>Strong Password Generator</h1>
-        <h2 class="text-white">Genera una password sicura</h2>
-        <div class="p-2 bg-info bg-opacity-25">Nessun parametro inserito</div>
 
-        <form class="rounded-2 bg-light" action="index.php" method="GET">
-            <div class="passleng d-flex justify-content-between align-items-center">
-                <label for="passLength">Lunghezza password:</label>
-                <input type="number" name="passLength" id="passLength">
-            </div>
+        <h1 class="text-center p-3 text-secondary text-opacity-50">Strong Password Generator</h1>
+        <h2 class="text-white text-center p-2">Genera una password sicura</h2>
 
-            <div class="d-flex justify-content-between align-items-center">
-                <label for="characters">Consenti ripetizioni di uno o più caratteri:</label>
-                <input type="radio" name="characters" id="characters"> Sì
-                <input type="radio" name="characters" id="no_characters"> No
+        <?php if (!empty($password)) : ?>
+            <div class="alert alert-primary" role="alert">
+                <strong>Password:</strong> <?php echo $password; ?>
             </div>
+        <?php endif; ?>
 
-            <div class="">
-                <input type="checkbox" name="letters" id="letters"> Lettere <br>
-                <input type="checkbox" name="numbers" id="numbers"> Numeri <br>
-                <input type="checkbox" name="symbols" id="symbols"> Simboli
-            </div>
 
-            <div>
-                <button class="btn btn-primary" type="submit">Invia</button>
-                <button class="btn btn-dark" type="reset">Annulla</button>
+
+        <form class="rounded-2 bg-light p-4" action="index.php" method="GET">
+            <div class="mb-3">
+                <label for="pass_length" class="form-label">How many characters do you want for your password?</label>
+                <input style="width: 250px;" type="number" name="pass_length" id="pass_length" class="form-control" placeholder="10" aria-describedby="helpId">
+                <small id="passwordlengthHelper" class="text-muted">Insert a number</small>
             </div>
+            <button class="btn btn-primary" type="submit">Generate</button>
         </form>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
